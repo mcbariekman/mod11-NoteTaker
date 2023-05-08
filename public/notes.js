@@ -42,37 +42,33 @@ const getAndRenderNotes = () => {
 };
 
 // Event listener for the Save Note button
-if (saveBtn) {
-  saveBtn.addEventListener("click", (e) => {
-    e.preventDefault();
+saveBtn.addEventListener("click", (e) => {
+  e.preventDefault();
 
-    const newNote = {
-      title: titleEl.value.trim(),
-      text: textEl.value.trim(),
-    };
+  const newNote = {
+    title: titleEl.value.trim(),
+    text: textEl.value.trim(),
+  };
 
-    fetch("/api/notes", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newNote),
+  fetch("/api/notes", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(newNote),
+  })
+    .then((res) => res.json())
+    .then((note) => {
+      titleEl.value = "";
+      textEl.value = "";
+      getAndRenderNotes();
     })
-      .then((res) => res.json())
-      .then((note) => {
-        titleEl.value = "";
-        textEl.value = "";
-        getAndRenderNotes();
-      })
-      .catch((err) => console.error(err));
-  });
-}
+    .catch((err) => console.error(err));
+});
 
 // Event listener for the New Note button
-if (newNoteBtn) {
-  newNoteBtn.addEventListener("click", () => {
-    titleEl.value = "";
-    textEl.value = "";
-  });
-}
+newNoteBtn.addEventListener("click", () => {
+  titleEl.value = "";
+  textEl.value = "";
+});
 
 // Load the notes when the DOM content has loaded
 document.addEventListener("DOMContentLoaded", () => {

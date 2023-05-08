@@ -1,7 +1,7 @@
 const path = require('path');
 const router = require('express').Router();
 
-// Route to display the landing page for index.html file
+// Route to display the landing page
 router.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/index.html'));
 });
